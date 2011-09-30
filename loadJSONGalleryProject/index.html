@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>loadJSONGalleryProject</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="author" content="The Chopping Block, Inc." />
+	<meta name="geo.country" content="US" />
+	<meta name="dc.language" content="en" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8" />
+	
+	<style type="text/css" media="screen">		
+		/*local styles if any (quick tests and local only overrides)*/
+	</style>
+</head>
+<body>
+
+	<div class="wrap" >
+		Project: loadJSONGalleryProject
+		<div id="imageholder">
+			<div id="imagetitle"></div>
+			<img id="image"></img>
+			<span id="next">Next Photo</span>
+			<span id="prev">Previous Photo</span>
+		</div>
+	</div>
+	
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		var index = 0;
+		
+		var galleryLoadHandler = function(data){
+			
+			galleryData = data;
+			
+			describeGallery();
+			initGallery();
+		}
+		
+
+		var describeGallery = function () {
+			
+			console.log('----------------------');
+			console.log('galleryData.title is: '+galleryData.title);
+			
+			// each photo
+			galleryData.photos.forEach( describePhotoFunction );	
+		}
+		
+		var describePhotoFunction = function (value, index, array) {
+			
+			console.log('photo.title is: '+value.title);
+			console.log('photo.url is: '+value.url);	
+		}
+		
+		var initGallery = function(){
+			
+			galleryData.photos.forEach(function(photo){
+				var img = new Image();
+				img.src = photo.url;
+				
+			});
+			
+			showIt(index);
+		}
+		
+		
+		var showIt = function(value){
+			
+			var imagetitle = document.getElementById("imagetitle");
+			var image = document.getElementById("image");
+			
+			imagetitle.innerHTML = galleryData.photos[value].title;
+			image.src = galleryData.photos[value].url;
+			
+		}
+		
+		document.getElementById("next").addEventListener("click", function(event){
+		
+			index++;
+			
+			if (index >= galleryData.photos.length){
+				index = 0;	
+			}
+			
+			showIt(index);
+			
+		});
+		
+		document.getElementById("prev").addEventListener("click", function(event){
+		
+			index--;
+			
+			if (index < 0){
+				index = galleryData.photos.length - 1;	
+			}
+			
+			showIt(index);
+			
+		});
+		
+	</script>
+	
+	<!-- I know that my external JSON file has the function call 'galleryLoadHandler' in it already -->
+	<script src="gallery.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
