@@ -58,9 +58,6 @@
 			var h = Math.ceil(img.height / numY);
 			console.log('h is: '+h);
 
-			
-			var items = [];
-
 			var wrapDiv = document.getElementsByClassName("wrap")[0];
 
 			var count = numX * numY;
@@ -77,7 +74,6 @@
 				// newdiv.style.backgroundColor = "#00C"
 				newdiv.style.background = "url("+img.src+") -"+ xCounter +"px"+" -"+ yCounter+"px";
 				newdiv.style["-webkit-transition-delay"] = i*100 + "ms";
-				items.push(newdiv);
 				wrapDiv.appendChild(newdiv);
 				
 
@@ -90,15 +86,23 @@
 				}
 
 			};
+
+			//It takes time for the browser to attach all of those properties/initial class
+			setTimeout(spinIt, 1);
+		}
+		
+		
+		function spinIt(){
+			var items = document.getElementsByClassName("bar");
 			
 			// hide the full one
 			var myImageDiv = document.getElementById("myImage");
 			myImageDiv.classList.add( "hide" );
-			
+
 			// make em fall
 			var count = items.length;
 			for ( var i=0; i<count; i++ ) {
-				
+
 				var c = items[i];
 				c.classList.add( "move" );
 
@@ -106,9 +110,7 @@
 			
 		}
 		
-		
-
-		
+	
 		
 	</script>
 	
