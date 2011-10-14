@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>loadJSONHighlightThumbnailGalleryProject</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="author" content="The Chopping Block, Inc." />
+	<meta name="geo.country" content="US" />
+	<meta name="dc.language" content="en" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8" />
+	
+	<style type="text/css" media="screen">		
+		/*local styles if any (quick tests and local only overrides)*/
+	</style>
+</head>
+<body>
+
+	<div class="wrap" >
+		Project: loadJSONHighlightThumbnailGalleryProject
+		
+		<div class="imageholder">
+			<img class="image"></img>
+		</div>
+		<div class="navholder">
+			<ul class="thumbnailNav"></ul>
+		</div>
+		<div>
+			<span class="next">Next Photo</span>
+			<span class="prev">Previous Photo</span>
+		</div>	
+		
+	</div>
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		var galleryData;
+		
+		var galleryLoadHandler = function(data){
+			
+			galleryData = data;
+			
+			createThumbnailNav();
+		}
+		
+		var createThumbnailNav = function(){
+			
+			var navholderUl = document.getElementsByClassName("navholder")[0];
+			
+			var count = galleryData.photos.length;
+			for ( var i=0; i<count; i++ ) {
+				
+				var newli = document.createElement('li');
+				newli.foo = i;
+				var newimg = document.createElement('img');
+				newimg.src = "thumbnails/"+galleryData.photos[i].url;
+				newimg.width = 100;
+				newimg.height = 100;
+				
+				newli.addEventListener("click", function(event){
+					
+					showIt(event.currentTarget.foo);
+					
+					// clear others
+					var selected = document.getElementsByClassName("select");
+					var count = selected.length;
+					for ( var j=0; j<count; j++ ) {
+						selected[j].classList.remove("select");
+					};
+					
+					event.currentTarget.classList.add("select");
+				});
+				
+				newli.appendChild(newimg);
+				
+			
+				
+				
+				navholderUl.appendChild(newli);
+				
+			};	
+		}
+		
+		var showIt = function(value){
+			
+			var image = document.getElementsByClassName("image")[0];
+			
+			image.src = "images/"+galleryData.photos[value].url;
+			
+		}
+		
+		
+	</script>
+	
+	<!-- I know that my external JSON file has the function call 'galleryLoadHandler' in it already -->
+	<script src="gallery.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+</body>
+</html>

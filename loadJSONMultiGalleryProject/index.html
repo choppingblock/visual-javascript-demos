@@ -133,9 +133,10 @@
 				listitem.innerHTML = "<span>" + navArray[i].title + "</span>(" + navArray[i].number + ")";
 				listitem.listindex = i;
 				list.appendChild(listitem);
+				// tried using parentElement - didn't work
 				listitem.children[0].addEventListener("click", function(e){					
-					showSet(e.currentTarget.parentElement.listindex);
-				});
+					showSet(e.currentTarget.parentNode.listindex);
+				}, true);
 				// listitem.children[0].addEventListener("mouseover", function(e){
 				// 	if(e.currentTarget.innerHTML == "Set 1"){
 				// 	e.currentTarget.setAttribute("class", "animateorange");
