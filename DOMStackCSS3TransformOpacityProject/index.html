@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DOMStackCSS3TransformsProject</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="author" content="The Chopping Block, Inc." />
+	<meta name="geo.country" content="US" />
+	<meta name="dc.language" content="en" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8" />
+	
+	<style type="text/css" media="screen">		
+		/*local styles if any (quick tests and local only overrides)*/
+	</style>
+</head>
+<body onLoad="init();">
+
+	<div id="wrap" >
+		<img class="previous-image" />
+		<img class="current-image opacity-off" />
+	</div>
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		//----------------------------------
+		//  vars
+		//----------------------------------
+		
+		var images = [ "images/mbr_090324_7905.jpg", "images/mbr_090409_8318.jpg", "images/mbr_090412_8583.jpg", "images/mbr_090523_9115.jpg", "images/mbr_090523_9123.jpg", "images/mbr_090814_1674.jpg", "images/mbr_090820_2220.jpg", "images/mbr_091003_3141.jpg", "images/mbr_091216_5130.jpg", "images/mbr_091216_5133.jpg" ];
+		var index = 0;
+		
+		//----------------------------------
+		//  init
+		//----------------------------------
+		
+		function init() {
+			
+			document.addEventListener("click", function(event){ 
+				createImage();
+			}, true);
+			
+		}
+		
+		function createImage() {
+			
+			var wrapDiv = document.getElementById('wrap');
+			
+			// clear old image
+			// var imageCount = 
+			
+			
+			// set previous
+			var previous = document.getElementsByClassName("previous-image")[0];
+		
+			
+			// make new image
+			var current = document.getElementsByClassName("current-image")[0];
+			if (current.src != null) {
+				previous.src = current.src;
+			}
+			
+
+			current.classList.remove("transform");
+			current.classList.add("opacity-off");
+			current.src = images[index];
+			setTimeout(function(){
+				current.classList.add("transform");
+				current.classList.remove("opacity-off");
+				
+			}, 1);
+			
+			//current.classList.add("opacity-on");
+						
+			index++;
+			if (index >= images.length) index = 0;
+			
+		}
+		
+		
+		
+	</script>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
