@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HTML5CanvasImageAnimateProject</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="author" content="The Chopping Block, Inc." />
+	<meta name="geo.country" content="US" />
+	<meta name="dc.language" content="en" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8" />
+	
+	<style type="text/css" media="screen">		
+		/*local styles if any (quick tests and local only overrides)*/
+		div.wrap {
+			width: 800px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		canvas#foo {
+			border: 2px solid red;
+		}
+		
+	</style>
+</head>
+<body onload="init();">
+	
+	<canvas id="foo"></canvas>
+	<button id="startBtn">Start</button>
+	<button id="stopBtn">Stop</button>
+	
+	<script src="libs/Vector2.js"></script>
+	<script src="Card.js"></script>
+	<script>
+		
+		// screen size variables
+		var	SCREEN_WIDTH = window.innerWidth,
+			SCREEN_HEIGHT = window.innerHeight,
+			CANVAS_WIDTH = 800,
+			CANVAS_HEIGHT = 500;
+
+		// canvas	
+		var canvas,
+ 			c; // c is the canvas' context 2D
+
+		var index = 0;
+
+		var images = [
+			"images/mbr_090409_8318.jpg",
+			"images/mbr_090412_8583.jpg",
+			"images/mbr_090820_2220.jpg"
+		];
+		
+		var timer;
+		
+		// store cards for updating 
+		var cards = [];
+
+		setupCanvas();
+
+		function init() {
+		
+			// set buttons
+			var startBtn = document.getElementById('startBtn');
+			startBtn.addEventListener("click", function(event){ 
+				
+				//console.log('start');
+				
+				console.log('index is: '+index);
+
+				
+				var card = new Card( CANVAS_WIDTH*0.5, CANVAS_HEIGHT + 100, images[index] );
+				card.vel = new Vector2(randomRange(-15, 15), randomRange(-10, -30));
+				//card.vel.rotate(20);
+				cards.push(card);
+				//card.draw(c);
+				
+				index++;
+				if( index >= images.length) index = 0;
+
+
+				clearInterval(timer);
+				timer = setInterval( render, 1000/30 );
+				
+			}, true);
+			
+			var stopBtn = document.getElementById('stopBtn');
+			stopBtn.addEventListener("click", function(event){ 
+				
+				console.log('stop');
+				
+				clearInterval(timer);
+				
+			}, true);
+			
+			
+			//timer = setInterval( render, 1000/30 );
+		
+		}
+
+		function render() {
+			
+			c.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+			
+			var count = cards.length;
+			for ( var i=0; i<count; i++ ) {
+				
+				var card = cards[i];
+				card.update();
+				card.draw(c);
+			};
+			
+		}
+
+		
+
+		function setupCanvas() {
+	
+			canvas = document.getElementById('foo')
+			c = canvas.getContext( '2d' );
+			canvas.width = CANVAS_WIDTH; 
+			canvas.height = CANVAS_HEIGHT;
+
+		}
+		
+		
+		// returns a random number between the two limits provided 
+		function randomRange(min, max)
+		{
+			return ((Math.random()*(max-min)) + min); 
+		}
+	
+	</script>	
+</body>
+</html>
